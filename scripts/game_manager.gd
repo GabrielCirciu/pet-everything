@@ -1,7 +1,7 @@
 extends Node3D
 
 # Game state variables
-var score: float = 0
+var score: float = 100
 var score_per_click: float = 1
 var score_per_second: float = 0
 var auto_clicker_cost: int = 10
@@ -57,7 +57,7 @@ func _process(_delta):
 
 func _on_object_clicked(clicked_object):
 	score += score_per_click
-	save_game()
+	# save_game()
 	
 	# Visual feedback
 	var tween = create_tween()
@@ -69,13 +69,14 @@ func _on_auto_clicker_button_pressed():
 		score -= auto_clicker_cost
 		auto_clicker_count += 1
 		score_per_second += 1
-		auto_clicker_cost = int(auto_clicker_cost * 1.5)  # Increase cost by 50%
+		auto_clicker_cost = int(auto_clicker_cost * 1.1)  # Increase cost by 10%
 		save_game()
 
 func _on_spawn_cube_button_pressed():
 	if score >= spawn_cube_cost:
 		score -= spawn_cube_cost
-		spawn_cube_cost = int(spawn_cube_cost * 1.5)  # Increase cost by 50%
+		score_per_second += 10
+		spawn_cube_cost = int(spawn_cube_cost * 1.1)  # Increase cost by 10%
 		
 		# Spawn new cube at random position
 		var new_cube = cube_scene.instantiate()
@@ -92,11 +93,11 @@ func _on_spawn_cube_button_pressed():
 		var spawn_tween = create_tween()
 		spawn_tween.tween_property(new_cube, "scale", Vector3(1, 1, 1), 0.3).set_trans(Tween.TRANS_ELASTIC)
 		
-		save_game()
+		# save_game()
 
 func _on_game_timer_timeout():
 	score += score_per_second
-	save_game()
+	# save_game()
 
 func save_game():
 	var save_data = {
