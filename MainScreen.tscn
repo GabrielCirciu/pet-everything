@@ -29,6 +29,8 @@ mesh = SubResource("BoxMesh_1")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ClickableObject"]
 shape = SubResource("BoxShape3D_cshku")
 
+[node name="SpawnedCubes" type="Node3D" parent="."]
+
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
@@ -65,6 +67,10 @@ theme_override_constants/separation = 10
 [node name="AutoClickerButton" type="Button" parent="UI/VBoxContainer/UpgradesContainer"]
 layout_mode = 2
 text = "Buy Auto Clicker (Cost: 10)"
+
+[node name="SpawnCubeButton" type="Button" parent="UI/VBoxContainer/UpgradesContainer"]
+layout_mode = 2
+text = "Spawn New Cube (Cost: 50)"
 
 [node name="GameTimer" type="Timer" parent="."]
 autostart = true
