@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bh7vlix0x2cxc"]
+[gd_scene load_steps=9 format=3 uid="uid://bh7vlix0x2cxc"]
 
 [ext_resource type="Script" uid="uid://ke11qpxkuxhb" path="res://scripts/game_manager.gd" id="1_2u4vx"]
-[ext_resource type="Script" uid="uid://df3xvk0olq6up" path="res://scripts/clickables_manager.gd" id="2_clickables"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cshku"]
 
@@ -67,10 +66,6 @@ text = "Buy Auto Clicker (Cost: 10)"
 layout_mode = 2
 text = "Spawn New Cube (Cost: 50)"
 
-[node name="SpawnSphereButton" type="Button" parent="UI/VBoxContainer/UpgradesContainer"]
-layout_mode = 2
-text = "Spawn New Sphere (Cost: 100)"
-
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.914254, 0.141884, -0.379485, 0, 0.936672, 0.350207, 0.405142, -0.320178, 0.856356, -2.489, 2.79142, 5.51327)
 projection = 1
@@ -79,30 +74,29 @@ size = 10.0
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 5, 0)
 
-[node name="Clickables" type="Node3D" parent="."]
-script = ExtResource("2_clickables")
+[node name="Creatures" type="Node3D" parent="."]
 
-[node name="Cubes" type="Node3D" parent="Clickables"]
+[node name="Cubes" type="Node3D" parent="Creatures"]
 
-[node name="Cube" type="RigidBody3D" parent="Clickables/Cubes"]
+[node name="Cube" type="RigidBody3D" parent="Creatures/Cubes"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.933735, 1.43755, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Clickables/Cubes/Cube"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Creatures/Cubes/Cube"]
 shape = SubResource("BoxShape3D_cshku")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Clickables/Cubes/Cube"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Creatures/Cubes/Cube"]
 mesh = SubResource("BoxMesh_cshku")
 skeleton = NodePath("")
 
-[node name="Spheres" type="Node3D" parent="Clickables"]
+[node name="Spheres" type="Node3D" parent="Creatures"]
 
-[node name="Sphere" type="RigidBody3D" parent="Clickables/Spheres"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19411, 1.23621, 0)
+[node name="Sphere" type="RigidBody3D" parent="Creatures/Spheres"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5689, 1.43755, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Clickables/Spheres/Sphere"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Creatures/Spheres/Sphere"]
 shape = SubResource("SphereShape3D_i8u74")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Clickables/Spheres/Sphere"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Creatures/Spheres/Sphere"]
 mesh = SubResource("SphereMesh_ih8ls")
 skeleton = NodePath("")
 
