@@ -1,18 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://bh7vlix0x2cxc"]
+[gd_scene load_steps=12 format=3 uid="uid://bh7vlix0x2cxc"]
 
 [ext_resource type="Script" uid="uid://ke11qpxkuxhb" path="res://scripts/game_manager.gd" id="1_2u4vx"]
-[ext_resource type="Script" uid="uid://df3xvk0olq6up" path="res://scripts/clickables_manager.gd" id="2_clickables"]
+[ext_resource type="Script" uid="uid://bey5blfvccq12" path="res://scripts/spawn_manager.gd" id="2_spawner"]
+[ext_resource type="Script" uid="uid://cbwem7ro7q515" path="res://scripts/click_manager.gd" id="3_click_manager"]
+[ext_resource type="Script" uid="uid://banudf2ijx7mn" path="res://scripts/ui_manager.gd" id="4_ui_manager"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_cshku"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_a8wb5"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_cshku"]
+[sub_resource type="SphereMesh" id="SphereMesh_6maps"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_i8u74"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_ih8ls"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_i8u74"]
-custom_solver_bias = 1.0
+[sub_resource type="BoxShape3D" id="BoxShape3D_ih8ls"]
 size = Vector3(10, 0.001, 10)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cshku"]
@@ -20,6 +17,13 @@ size = Vector3(10, 0.001, 10)
 [sub_resource type="PlaneMesh" id="PlaneMesh_ih8ls"]
 material = SubResource("StandardMaterial3D_cshku")
 size = Vector2(10, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i8u74"]
+custom_solver_bias = 1.0
+size = Vector3(0.001, 10, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_453mu"]
+size = Vector3(10, 10, 0.001)
 
 [node name="MainScreen" type="Node3D"]
 script = ExtResource("1_2u4vx")
@@ -32,87 +36,115 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
-layout_mode = 1
-anchors_preset = 15
+[node name="UIManager" type="Control" parent="UI"]
+anchors_preset = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -928.0
-offset_bottom = -457.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_ui_manager")
+
+[node name="ScoreContainer" type="VBoxContainer" parent="UI/UIManager"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 28.0
+offset_top = 27.0
+offset_right = -20.0
+offset_bottom = 127.0
+grow_horizontal = 2
 theme_override_constants/separation = 20
 
-[node name="ScoreLabel" type="Label" parent="UI/VBoxContainer"]
+[node name="ScoreLabel" type="Label" parent="UI/UIManager/ScoreContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Score: 0"
 horizontal_alignment = 1
 
-[node name="ScorePerSecondLabel" type="Label" parent="UI/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Score per second: 0"
-horizontal_alignment = 1
-
-[node name="UpgradesContainer" type="VBoxContainer" parent="UI/VBoxContainer"]
-layout_mode = 2
+[node name="UpgradesContainer" type="VBoxContainer" parent="UI/UIManager"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 127.0
+offset_right = 283.0
+offset_bottom = 227.0
 theme_override_constants/separation = 10
 
-[node name="AutoClickerButton" type="Button" parent="UI/VBoxContainer/UpgradesContainer"]
+[node name="ClickRadiusButton" type="Button" parent="UI/UIManager/UpgradesContainer"]
 layout_mode = 2
-text = "Buy Auto Clicker (Cost: 10)"
+text = "Increase Click Radius"
 
-[node name="SpawnCubeButton" type="Button" parent="UI/VBoxContainer/UpgradesContainer"]
+[node name="ClickRadiusCost" type="Label" parent="UI/UIManager/UpgradesContainer"]
 layout_mode = 2
-text = "Spawn New Cube (Cost: 50)"
+theme_override_font_sizes/font_size = 18
+text = "Cost: 10"
 
-[node name="SpawnSphereButton" type="Button" parent="UI/VBoxContainer/UpgradesContainer"]
+[node name="PointsMultiplierButton" type="Button" parent="UI/UIManager/UpgradesContainer"]
 layout_mode = 2
-text = "Spawn New Sphere (Cost: 100)"
+text = "Increase Points Multiplier"
+
+[node name="PointsMultiplierCost" type="Label" parent="UI/UIManager/UpgradesContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Cost: 20"
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.914254, 0.141884, -0.379485, 0, 0.936672, 0.350207, 0.405142, -0.320178, 0.856356, -2.489, 2.79142, 5.51327)
+transform = Transform3D(0.914254, 0.141884, -0.379485, 0, 0.936672, 0.350207, 0.405142, -0.320178, 0.856356, -3.45495, 4.41239, 6.66235)
 projection = 1
 size = 10.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 5, 0)
 
-[node name="Clickables" type="Node3D" parent="."]
-script = ExtResource("2_clickables")
+[node name="SpawnManager" type="Node3D" parent="."]
+script = ExtResource("2_spawner")
 
-[node name="Cubes" type="Node3D" parent="Clickables"]
+[node name="Spheres" type="Node3D" parent="SpawnManager"]
 
-[node name="Cube" type="RigidBody3D" parent="Clickables/Cubes"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.933735, 1.43755, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Clickables/Cubes/Cube"]
-shape = SubResource("BoxShape3D_cshku")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Clickables/Cubes/Cube"]
-mesh = SubResource("BoxMesh_cshku")
-skeleton = NodePath("")
-
-[node name="Spheres" type="Node3D" parent="Clickables"]
-
-[node name="Sphere" type="RigidBody3D" parent="Clickables/Spheres"]
+[node name="Sphere" type="RigidBody3D" parent="SpawnManager/Spheres"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19411, 1.23621, 0)
+collision_layer = 7
+collision_mask = 7
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Clickables/Spheres/Sphere"]
-shape = SubResource("SphereShape3D_i8u74")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpawnManager/Spheres/Sphere"]
+shape = SubResource("SphereShape3D_a8wb5")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Clickables/Spheres/Sphere"]
-mesh = SubResource("SphereMesh_ih8ls")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnManager/Spheres/Sphere"]
+mesh = SubResource("SphereMesh_6maps")
 skeleton = NodePath("")
 
-[node name="GameTimer" type="Timer" parent="."]
-autostart = true
+[node name="ClickManager" type="Node3D" parent="."]
+script = ExtResource("3_click_manager")
 
-[node name="Floor" type="StaticBody3D" parent="."]
+[node name="Enviornment" type="Node3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+[node name="Floor" type="StaticBody3D" parent="Enviornment"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enviornment/Floor"]
+shape = SubResource("BoxShape3D_ih8ls")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enviornment/Floor"]
+mesh = SubResource("PlaneMesh_ih8ls")
+
+[node name="Walls-Invisible" type="StaticBody3D" parent="Enviornment"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Right" type="CollisionShape3D" parent="Enviornment/Walls-Invisible"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 0)
 shape = SubResource("BoxShape3D_i8u74")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-mesh = SubResource("PlaneMesh_ih8ls")
+[node name="Left" type="CollisionShape3D" parent="Enviornment/Walls-Invisible"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 0)
+shape = SubResource("BoxShape3D_i8u74")
+
+[node name="Back" type="CollisionShape3D" parent="Enviornment/Walls-Invisible"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -5)
+shape = SubResource("BoxShape3D_453mu")
+
+[node name="Front" type="CollisionShape3D" parent="Enviornment/Walls-Invisible"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
+shape = SubResource("BoxShape3D_453mu")
+
+[connection signal="pressed" from="UI/UIManager/UpgradesContainer/ClickRadiusButton" to="UI/UIManager" method="_on_click_radius_button_pressed"]
+[connection signal="pressed" from="UI/UIManager/UpgradesContainer/PointsMultiplierButton" to="UI/UIManager" method="_on_points_multiplier_button_pressed"]
