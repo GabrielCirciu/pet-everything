@@ -1,22 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://bh7vlix0x2cxc"]
+[gd_scene load_steps=10 format=3 uid="uid://bh7vlix0x2cxc"]
 
 [ext_resource type="Script" uid="uid://ke11qpxkuxhb" path="res://scripts/game_manager.gd" id="1_2u4vx"]
-[ext_resource type="Script" uid="uid://bey5blfvccq12" path="res://scripts/spawn_manager.gd" id="2_spawner"]
 [ext_resource type="Script" uid="uid://cbwem7ro7q515" path="res://scripts/click_manager.gd" id="3_click_manager"]
+[ext_resource type="PackedScene" uid="uid://w6tsy7wijstg" path="res://scenes/clickable_cube.tscn" id="4_7pmop"]
+[ext_resource type="PackedScene" uid="uid://dq0qrrxsaxj6j" path="res://scenes/clickable_sphere.tscn" id="4_453mu"]
 [ext_resource type="Script" uid="uid://banudf2ijx7mn" path="res://scripts/ui_manager.gd" id="4_ui_manager"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_a8wb5"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_6maps"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ih8ls"]
 size = Vector3(10, 0.001, 10)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cshku"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_ih8ls"]
-material = SubResource("StandardMaterial3D_cshku")
-size = Vector2(10, 10)
+[sub_resource type="BoxMesh" id="BoxMesh_453mu"]
+size = Vector3(10, 2, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i8u74"]
 custom_solver_bias = 1.0
@@ -25,126 +19,317 @@ size = Vector3(0.001, 10, 10)
 [sub_resource type="BoxShape3D" id="BoxShape3D_453mu"]
 size = Vector3(10, 10, 0.001)
 
-[node name="MainScreen" type="Node3D"]
+[node name="GameManager" type="Node3D"]
 script = ExtResource("1_2u4vx")
 
-[node name="UI" type="Control" parent="."]
+[node name="UIManager" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="UIManager" type="Control" parent="UI"]
-anchors_preset = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 script = ExtResource("4_ui_manager")
 
-[node name="ScoreContainer" type="VBoxContainer" parent="UI/UIManager"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 28.0
-offset_top = 27.0
-offset_right = -20.0
-offset_bottom = 127.0
-grow_horizontal = 2
-theme_override_constants/separation = 20
-
-[node name="ScoreLabel" type="Label" parent="UI/UIManager/ScoreContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Score: 0"
-horizontal_alignment = 1
-
-[node name="UpgradesContainer" type="VBoxContainer" parent="UI/UIManager"]
+[node name="HorizontalSplit" type="VBoxContainer" parent="UIManager"]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 127.0
-offset_right = 283.0
-offset_bottom = 227.0
+offset_left = 14.0
+offset_top = 17.0
+offset_right = 354.0
+offset_bottom = 431.0
+scale = Vector2(0.5, 0.5)
 theme_override_constants/separation = 10
 
-[node name="ClickRadiusButton" type="Button" parent="UI/UIManager/UpgradesContainer"]
+[node name="Money" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
 layout_mode = 2
-text = "Increase Click Radius"
 
-[node name="ClickRadiusCost" type="Label" parent="UI/UIManager/UpgradesContainer"]
+[node name="MoneyText" type="Label" parent="UIManager/HorizontalSplit/Money"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Money:"
+
+[node name="MoneyLabel" type="Label" parent="UIManager/HorizontalSplit/Money"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "N/A"
+
+[node name="EntityInfo" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+layout_mode = 2
+
+[node name="EntityInfoText" type="Label" parent="UIManager/HorizontalSplit/EntityInfo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Entities:"
+
+[node name="EntityCountLabel" type="Label" parent="UIManager/HorizontalSplit/EntityInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "N/A"
+
+[node name="EntityInfoLabelDivider" type="Label" parent="UIManager/HorizontalSplit/EntityInfo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "/"
+
+[node name="EntityLimitLabel" type="Label" parent="UIManager/HorizontalSplit/EntityInfo"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "N/A"
+
+[node name="ClickRadius" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+layout_mode = 2
+
+[node name="ClickRadiusText" type="Label" parent="UIManager/HorizontalSplit/ClickRadius"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "Cost: 10"
+text = "Click Radius:"
 
-[node name="PointsMultiplierButton" type="Button" parent="UI/UIManager/UpgradesContainer"]
-layout_mode = 2
-text = "Increase Points Multiplier"
-
-[node name="PointsMultiplierCost" type="Label" parent="UI/UIManager/UpgradesContainer"]
+[node name="ClickRadiusLabel" type="Label" parent="UIManager/HorizontalSplit/ClickRadius"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
-text = "Cost: 20"
+text = "N/A"
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.914254, 0.141884, -0.379485, 0, 0.936672, 0.350207, 0.405142, -0.320178, 0.856356, -3.45495, 4.41239, 6.66235)
-projection = 1
-size = 10.0
+[node name="ClickRadiusButton" type="Button" parent="UIManager/HorizontalSplit/ClickRadius"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "N/A"
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 5, 0)
+[node name="ClickHoldEnable" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+layout_mode = 2
 
-[node name="SpawnManager" type="Node3D" parent="."]
-script = ExtResource("2_spawner")
+[node name="ClickHoldEnableText" type="Label" parent="UIManager/HorizontalSplit/ClickHoldEnable"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Enable Click Holding:"
 
-[node name="Spheres" type="Node3D" parent="SpawnManager"]
+[node name="ClickHoldEnableButton" type="Button" parent="UIManager/HorizontalSplit/ClickHoldEnable"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "N/A"
 
-[node name="Sphere" type="RigidBody3D" parent="SpawnManager/Spheres"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19411, 1.23621, 0)
-collision_layer = 7
-collision_mask = 7
+[node name="ClickHoldInterval" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+layout_mode = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SpawnManager/Spheres/Sphere"]
-shape = SubResource("SphereShape3D_a8wb5")
+[node name="ClickHoldIntervalText" type="Label" parent="UIManager/HorizontalSplit/ClickHoldInterval"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Click Holding Interval:"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SpawnManager/Spheres/Sphere"]
-mesh = SubResource("SphereMesh_6maps")
-skeleton = NodePath("")
+[node name="ClickHoldIntervalLabel" type="Label" parent="UIManager/HorizontalSplit/ClickHoldInterval"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "N/A"
+
+[node name="ClickHoldIntervalButton" type="Button" parent="UIManager/HorizontalSplit/ClickHoldInterval"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+disabled = true
+text = "N/A"
+
+[node name="AutoClickEnable" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+layout_mode = 2
+
+[node name="AutoClickEnableText" type="Label" parent="UIManager/HorizontalSplit/AutoClickEnable"]
+layout_mode = 2
+text = "Enable Auto Clicking:"
+
+[node name="AutoClickEnableButton" type="Button" parent="UIManager/HorizontalSplit/AutoClickEnable"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "N/A"
+
+[node name="AutoClickInterval" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+layout_mode = 2
+
+[node name="AutoClickIntervalText" type="Label" parent="UIManager/HorizontalSplit/AutoClickInterval"]
+layout_mode = 2
+text = "Auto Click Interval:"
+
+[node name="AutoClickIntervalLabel" type="Label" parent="UIManager/HorizontalSplit/AutoClickInterval"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "N/A"
+
+[node name="AutoClickIntervalButton" type="Button" parent="UIManager/HorizontalSplit/AutoClickInterval"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+disabled = true
+text = "N/A"
+
+[node name="SpawnSphere" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+layout_mode = 2
+
+[node name="SpawnSphereText" type="Label" parent="UIManager/HorizontalSplit/SpawnSphere"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Spawn a Sphere:"
+
+[node name="SpawnSphereLabel" type="Label" parent="UIManager/HorizontalSplit/SpawnSphere"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "N/A"
+
+[node name="SpawnSphereButton" type="Button" parent="UIManager/HorizontalSplit/SpawnSphere"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "N/A"
+
+[node name="IncreaseSphereReward" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+layout_mode = 2
+
+[node name="IncreaseSphereRewardText" type="Label" parent="UIManager/HorizontalSplit/IncreaseSphereReward"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Increase Sphere Value:"
+
+[node name="IncreaseSphereRewardLabel" type="Label" parent="UIManager/HorizontalSplit/IncreaseSphereReward"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "N/A"
+
+[node name="IncreaseSphereRewardButton" type="Button" parent="UIManager/HorizontalSplit/IncreaseSphereReward"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "N/A"
+
+[node name="SpawnCube" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+layout_mode = 2
+
+[node name="SpawnCubeText" type="Label" parent="UIManager/HorizontalSplit/SpawnCube"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Spawn a Cube:"
+
+[node name="SpawnCubeLabel" type="Label" parent="UIManager/HorizontalSplit/SpawnCube"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "N/A"
+
+[node name="SpawnCubeButton" type="Button" parent="UIManager/HorizontalSplit/SpawnCube"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "N/A"
+
+[node name="IncreaseCubeReward" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+layout_mode = 2
+
+[node name="IncreaseCubeRewardText" type="Label" parent="UIManager/HorizontalSplit/IncreaseCubeReward"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Increase Cube Value:"
+
+[node name="IncreaseCubeRewardLabel" type="Label" parent="UIManager/HorizontalSplit/IncreaseCubeReward"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "N/A"
+
+[node name="IncreaseCubeRewardButton" type="Button" parent="UIManager/HorizontalSplit/IncreaseCubeReward"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "N/A"
+
+[node name="IncreasePlayArea" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+layout_mode = 2
+
+[node name="IncreasePlayAreaText" type="Label" parent="UIManager/HorizontalSplit/IncreasePlayArea"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Increase Play Area:"
+
+[node name="IncreasePlayAreaLabel" type="Label" parent="UIManager/HorizontalSplit/IncreasePlayArea"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "N/A"
+
+[node name="IncreasePlayAreaButton" type="Button" parent="UIManager/HorizontalSplit/IncreasePlayArea"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "N/A"
 
 [node name="ClickManager" type="Node3D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3_click_manager")
 
-[node name="Enviornment" type="Node3D" parent="."]
+[node name="Camera" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.707107, 0.298836, -0.640856, 0, 0.906308, 0.422618, 0.707107, -0.298836, 0.640856, -23.5915, 18.0606, 23.27)
+keep_aspect = 0
+projection = 1
+size = 30.0
 
-[node name="Floor" type="StaticBody3D" parent="Enviornment"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.671721, 0.47618, -0.567489, 0, 0.766044, 0.642788, 0.740805, -0.431774, 0.514568, 0, 5, 0)
+
+[node name="Entities" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Cube" parent="Entities" instance=ExtResource("4_7pmop")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.597447, 0.9178, -0.0304158)
+
+[node name="Sphere" parent="Entities" instance=ExtResource("4_453mu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.669778, 0.798294, 0)
+
+[node name="Environment" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="Floor" type="StaticBody3D" parent="Environment"]
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enviornment/Floor"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor"]
 shape = SubResource("BoxShape3D_ih8ls")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Enviornment/Floor"]
-mesh = SubResource("PlaneMesh_ih8ls")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_453mu")
 
-[node name="Walls-Invisible" type="StaticBody3D" parent="Enviornment"]
+[node name="Walls-Invisible" type="StaticBody3D" parent="Environment"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="Right" type="CollisionShape3D" parent="Enviornment/Walls-Invisible"]
+[node name="Right" type="CollisionShape3D" parent="Environment/Walls-Invisible"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 0)
 shape = SubResource("BoxShape3D_i8u74")
 
-[node name="Left" type="CollisionShape3D" parent="Enviornment/Walls-Invisible"]
+[node name="Left" type="CollisionShape3D" parent="Environment/Walls-Invisible"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 0)
 shape = SubResource("BoxShape3D_i8u74")
 
-[node name="Back" type="CollisionShape3D" parent="Enviornment/Walls-Invisible"]
+[node name="Back" type="CollisionShape3D" parent="Environment/Walls-Invisible"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -5)
 shape = SubResource("BoxShape3D_453mu")
 
-[node name="Front" type="CollisionShape3D" parent="Enviornment/Walls-Invisible"]
+[node name="Front" type="CollisionShape3D" parent="Environment/Walls-Invisible"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
 shape = SubResource("BoxShape3D_453mu")
 
-[connection signal="pressed" from="UI/UIManager/UpgradesContainer/ClickRadiusButton" to="UI/UIManager" method="_on_click_radius_button_pressed"]
-[connection signal="pressed" from="UI/UIManager/UpgradesContainer/PointsMultiplierButton" to="UI/UIManager" method="_on_points_multiplier_button_pressed"]
+[connection signal="pressed" from="UIManager/HorizontalSplit/ClickRadius/ClickRadiusButton" to="UIManager" method="_on_click_radius_button_pressed"]
+[connection signal="pressed" from="UIManager/HorizontalSplit/ClickHoldEnable/ClickHoldEnableButton" to="UIManager" method="_on_click_hold_enable_button_pressed"]
+[connection signal="pressed" from="UIManager/HorizontalSplit/ClickHoldInterval/ClickHoldIntervalButton" to="UIManager" method="_on_click_hold_interval_button_pressed"]
+[connection signal="pressed" from="UIManager/HorizontalSplit/AutoClickEnable/AutoClickEnableButton" to="UIManager" method="_on_auto_click_enable_button_pressed"]
+[connection signal="pressed" from="UIManager/HorizontalSplit/AutoClickInterval/AutoClickIntervalButton" to="UIManager" method="_on_auto_click_interval_button_pressed"]
+[connection signal="pressed" from="UIManager/HorizontalSplit/SpawnSphere/SpawnSphereButton" to="UIManager" method="_on_spawn_sphere_button_pressed"]
+[connection signal="pressed" from="UIManager/HorizontalSplit/IncreaseSphereReward/IncreaseSphereRewardButton" to="UIManager" method="_on_increase_sphere_value_button_pressed"]
+[connection signal="pressed" from="UIManager/HorizontalSplit/SpawnCube/SpawnCubeButton" to="UIManager" method="_on_spawn_cube_button_pressed"]
+[connection signal="pressed" from="UIManager/HorizontalSplit/IncreaseCubeReward/IncreaseCubeRewardButton" to="UIManager" method="_on_increase_cube_reward_button_pressed"]
+[connection signal="pressed" from="UIManager/HorizontalSplit/IncreasePlayArea/IncreasePlayAreaButton" to="UIManager" method="_on_increase_play_area_button_pressed"]

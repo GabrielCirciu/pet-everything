@@ -1,66 +1,66 @@
+"""
+Game Manager
+
+This script is responsible for managing the game state, including:
+- Spawning entities (spheres and cubes)
+- Play Area upgrades (i.e. Larger area for entities, or new objects, not implemented yet)
+- Managing the game loop (i.e. A Pause Menu, starting, pausing, saving, loading, etc., not implemented yet)
+"""
+
 extends Node3D
 
-# References to child managers
-var spawn_manager
-var click_manager
-var ui_manager
+var entities
+var environment
+var camera
+var entity_types = {
+	"sphere": preload("res://scenes/clickable_sphere.tscn"),
+	"cube": preload("res://scenes/clickable_cube.tscn")
+}
+var play_area_size = 1
+var entity_limit = 10
+var entity_count = 2
 
-# Game state
-var game_running = false
-var auto_spawn_timer = 0.0
-var auto_spawn_interval = 3.0  # Spawn a new sphere every 3 seconds
 
 func _ready():
-	# Initialize references to managers
-	spawn_manager = $SpawnManager  # The renamed clickables_manager
-	click_manager = $ClickManager
-	ui_manager = $UI/UIManager
-	
-	# Connect signals
-	spawn_manager.connect("object_spawned", on_object_spawned)
-	ui_manager.connect("upgrade_purchased", on_upgrade_purchased)
-	
-	# Start the game
-	start_game()
+	entities = $%Entities
+	environment = $%Environment
+	camera = $%Camera
 	print("Game initialized")
+		
 
-func _process(delta):
-	if game_running:
-		# Auto-spawn objects periodically
-		auto_spawn_timer += delta
-		if auto_spawn_timer >= auto_spawn_interval:
-			spawn_new_object()
-			auto_spawn_timer = 0.0
+func spawn_new_entity(entity_type):
+	var new_entity = entity_types[entity_type].instantiate()
+	entities.add_child(new_entity)
+	new_entity.scale = Vector3(0.1, 0.1, 0.1)
+	var random_x = randf_range(-play_area_size/2.0, play_area_size/2.0)
+	var random_z = randf_range(-play_area_size/2.0, play_area_size/2.0)
+	new_entity.position = Vector3(random_x, 3, random_z)
+	var spawn_tween = create_tween()
+	spawn_tween.tween_property(new_entity, "scale", Vector3(1, 1, 1), 0.1).set_trans(Tween.TRANS_BOUNCE)
+	entity_count += 1
 
-func start_game():
-	# Initialize game state
-	game_running = true
-	
-	# Spawn initial objects
-	for i in range(5):
-		spawn_new_object()
-	
-	print("Game started")
 
-func spawn_new_object():
-	var new_object = spawn_manager.spawn_sphere()
-	print("Game manager: Spawned new object")
-	return new_object
+func increase_play_area(increase):
+	play_area_size *= increase
+	var tween_environment = create_tween()
+	tween_environment.tween_property(environment, "scale", Vector3(play_area_size, 1, play_area_size), 0.2).set_trans(Tween.TRANS_QUAD)
+	var direction = camera.global_transform.basis.z  # This is the forward vector
+	camera.global_position = camera.global_position + (direction * 50)
+	var tween_camera = create_tween()
+	tween_camera.tween_property(camera, "size", camera.size * 1.65, 0.2).set_trans(Tween.TRANS_QUAD)
 
-# Signal handlers
-func on_object_spawned(object):
-	# We could add any game-wide handling of spawned objects here
-	print("Game manager: Object spawned signal received")
 
-func on_upgrade_purchased(upgrade_type, level):
-	match upgrade_type:
-		"click_radius":
-			print("Game manager: Click radius upgraded to level ", level)
-			# Could add game-wide effects here
-			
-		"points_multiplier":
-			print("Game manager: Points multiplier upgraded to level ", level)
-			# Could add game-wide effects here
-			
-		_:
-			print("Game manager: Unknown upgrade type: ", upgrade_type)
+func increase_entity_limit(increase):
+	entity_limit *= increase
+
+
+func get_play_area_size():
+	return play_area_size
+
+
+func get_entity_count():
+	return entity_count
+
+
+func get_entity_limit():
+	return entity_limit

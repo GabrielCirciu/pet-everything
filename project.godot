@@ -15,6 +15,12 @@ run/main_scene="uid://bh7vlix0x2cxc"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[global_group]
+
+spawned_entities=""
+cube=""
+sphere=""
+
 [input]
 
 click={
