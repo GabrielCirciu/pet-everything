@@ -26,7 +26,22 @@ func _ready():
 	environment = $%Environment
 	camera = $%Camera
 	print("Game initialized")
-		
+
+
+func _input(event):
+	# Handle zoom input
+	if event.is_action_pressed("camera_zoom_in"):
+		camera.size -= 1.0
+	elif event.is_action_pressed("camera_zoom_out"):
+		camera.size += 1.0
+	# Handle camera panning with rebindable button
+	elif event is InputEventMouseMotion and Input.is_action_pressed("camera_pan"):
+		var right = camera.global_transform.basis.x
+		var up = camera.global_transform.basis.y
+		var move_speed = camera.size / 1000
+		camera.position -= right * event.relative.x * move_speed
+		camera.position += up * event.relative.y * move_speed
+
 
 func spawn_new_entity(entity_type):
 	var new_entity = entity_types[entity_type].instantiate()
