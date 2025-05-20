@@ -1,0 +1,239 @@
+[gd_scene load_steps=5 format=3 uid="uid://dilhedk42fiqg"]
+
+[ext_resource type="Script" uid="uid://cr71jlx5u034k" path="res://scripts/panel_manager.gd" id="1_l2bgj"]
+[ext_resource type="ButtonGroup" uid="uid://b8pjtsmv4shtx" path="res://resources/settings_button_group.tres" id="2_y1h3b"]
+
+[sub_resource type="Gradient" id="Gradient_l2bgj"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y1h3b"]
+gradient = SubResource("Gradient_l2bgj")
+width = 32
+height = 32
+
+[node name="UserInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="PanelManager" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -302.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+script = ExtResource("1_l2bgj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Money" type="MarginContainer" parent="PanelManager/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Money"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelManager/VBoxContainer/Money/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Money/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="MoneyLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Money/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+text = "N/A"
+scroll_active = false
+vertical_alignment = 1
+
+[node name="MoneyIcon" type="TextureRect" parent="PanelManager/VBoxContainer/Money/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = SubResource("GradientTexture2D_y1h3b")
+stretch_mode = 2
+
+[node name="Menus" type="MarginContainer" parent="PanelManager/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus"]
+layout_mode = 2
+
+[node name="TopMenusAndPanels" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TopMenus" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="CursorsButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_y1h3b")
+text = "Cu"
+
+[node name="AnimalsButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_y1h3b")
+text = "An"
+
+[node name="FurnituresButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_y1h3b")
+text = "Fu"
+
+[node name="OptionsButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_y1h3b")
+text = "Op"
+
+[node name="CursorsPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer"]
+layout_mode = 2
+text = "Cursors and Other"
+horizontal_alignment = 1
+
+[node name="AnimalsPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer"]
+layout_mode = 2
+text = "Animals"
+horizontal_alignment = 1
+
+[node name="FurnituresPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/FurnituresPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/FurnituresPanel/MarginContainer"]
+layout_mode = 2
+text = "Furnitures"
+horizontal_alignment = 1
+
+[node name="OptionsPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/OptionsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/OptionsPanel/MarginContainer"]
+layout_mode = 2
+text = "Options"
+horizontal_alignment = 1
+
+[node name="SpheresPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer"]
+layout_mode = 2
+text = "Spheres"
+horizontal_alignment = 1
+
+[node name="CubesPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer"]
+layout_mode = 2
+text = "Cubes"
+horizontal_alignment = 1
+
+[node name="SideMenus" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="SpheresButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/SideMenus"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_y1h3b")
+text = "Sp"
+
+[node name="CubesButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/SideMenus"]
+unique_name_in_owner = true
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("2_y1h3b")
+text = "Cu"

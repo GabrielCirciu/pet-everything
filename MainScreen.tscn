@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bh7vlix0x2cxc"]
+[gd_scene load_steps=15 format=3 uid="uid://bh7vlix0x2cxc"]
 
 [ext_resource type="Script" uid="uid://ke11qpxkuxhb" path="res://scripts/game_manager.gd" id="1_2u4vx"]
 [ext_resource type="Script" uid="uid://cbwem7ro7q515" path="res://scripts/click_manager.gd" id="3_click_manager"]
 [ext_resource type="PackedScene" uid="uid://w6tsy7wijstg" path="res://scenes/clickable_cube.tscn" id="4_7pmop"]
 [ext_resource type="PackedScene" uid="uid://dq0qrrxsaxj6j" path="res://scenes/clickable_sphere.tscn" id="4_453mu"]
 [ext_resource type="Script" uid="uid://banudf2ijx7mn" path="res://scripts/ui_manager.gd" id="4_ui_manager"]
+[ext_resource type="PackedScene" uid="uid://dilhedk42fiqg" path="res://scenes/user_interface.tscn" id="6_b26h7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ih8ls"]
 size = Vector3(10, 0.001, 10)
@@ -18,6 +19,36 @@ size = Vector3(0.001, 10, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_453mu"]
 size = Vector3(10, 10, 0.001)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7pmop"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.485703, 0.485704, 0.485703, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="Gradient" id="Gradient_b26h7"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a8wb5"]
+gradient = SubResource("Gradient_b26h7")
+fill = 1
+fill_from = Vector2(0, 1)
+fill_to = Vector2(1, 0.0042735)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b26h7"]
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 
 [node name="MainScreen" type="Node3D"]
 
@@ -68,7 +99,7 @@ transform = Transform3D(0.671721, 0.47618, -0.567489, 0, 0.766044, 0.642788, 0.7
 
 [node name="Camera" type="Camera3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(0.707107, 0.298836, -0.640857, 0, 0.906308, 0.422618, 0.707107, -0.298836, 0.640857, -23.5915, 18.0606, 23.27)
+transform = Transform3D(0.707107, 0.298836, -0.640857, 0, 0.906308, 0.422618, 0.707107, -0.298836, 0.640857, -21.6585, 18.0606, 27.1507)
 keep_aspect = 0
 projection = 1
 current = true
@@ -76,6 +107,7 @@ size = 30.0
 
 [node name="UIManager" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -84,236 +116,268 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_ui_manager")
 
-[node name="HorizontalSplit" type="VBoxContainer" parent="UIManager"]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 17.0
-offset_right = 354.0
-offset_bottom = 431.0
-scale = Vector2(0.5, 0.5)
-theme_override_constants/separation = 10
+[node name="VSplitContainer" type="VSplitContainer" parent="UIManager"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.676
+anchor_top = 0.031
+anchor_right = 0.98
+anchor_bottom = 0.95
+offset_left = 0.247925
+offset_top = -0.0880013
+offset_right = 0.0400391
+offset_bottom = -0.600037
+grow_horizontal = 0
+grow_vertical = 2
+dragging_enabled = false
 
-[node name="Money" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="PanelContainer" type="PanelContainer" parent="UIManager/VSplitContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_7pmop")
 
-[node name="MoneyText" type="Label" parent="UIManager/HorizontalSplit/Money"]
+[node name="Money" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Money:"
+size_flags_horizontal = 8
+theme_override_constants/separation = 16
 
-[node name="MoneyLabel" type="Label" parent="UIManager/HorizontalSplit/Money"]
+[node name="MoneyLabel" type="Label" parent="UIManager/VSplitContainer/PanelContainer/Money"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "N/A"
+vertical_alignment = 1
 
-[node name="EntityInfo" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="TextureRect" type="TextureRect" parent="UIManager/VSplitContainer/PanelContainer/Money"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = SubResource("GradientTexture2D_a8wb5")
+
+[node name="PanelContainer2" type="PanelContainer" parent="UIManager/VSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_b26h7")
+
+[node name="TabContainer" type="TabContainer" parent="UIManager/VSplitContainer/PanelContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tab_alignment = 2
+current_tab = 0
+
+[node name="HorizontalSplit" type="VBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="EntityInfo" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit"]
 layout_mode = 2
 
-[node name="EntityInfoText" type="Label" parent="UIManager/HorizontalSplit/EntityInfo"]
+[node name="EntityInfoText" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/EntityInfo"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Entities:"
 
-[node name="EntityCountLabel" type="Label" parent="UIManager/HorizontalSplit/EntityInfo"]
+[node name="EntityCountLabel" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/EntityInfo"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "N/A"
 
-[node name="EntityInfoLabelDivider" type="Label" parent="UIManager/HorizontalSplit/EntityInfo"]
+[node name="EntityInfoLabelDivider" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/EntityInfo"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "/"
 
-[node name="EntityLimitLabel" type="Label" parent="UIManager/HorizontalSplit/EntityInfo"]
+[node name="EntityLimitLabel" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/EntityInfo"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "N/A"
 
-[node name="ClickRadius" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="ClickRadius" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit"]
 layout_mode = 2
 
-[node name="ClickRadiusText" type="Label" parent="UIManager/HorizontalSplit/ClickRadius"]
+[node name="ClickRadiusText" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickRadius"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Click Radius:"
 
-[node name="ClickRadiusLabel" type="Label" parent="UIManager/HorizontalSplit/ClickRadius"]
+[node name="ClickRadiusLabel" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickRadius"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "N/A"
 
-[node name="ClickRadiusButton" type="Button" parent="UIManager/HorizontalSplit/ClickRadius"]
+[node name="ClickRadiusButton" type="Button" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickRadius"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "N/A"
 
-[node name="ClickHoldEnable" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="ClickHoldEnable" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit"]
 layout_mode = 2
 
-[node name="ClickHoldEnableText" type="Label" parent="UIManager/HorizontalSplit/ClickHoldEnable"]
+[node name="ClickHoldEnableText" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickHoldEnable"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Enable Click Holding:"
 
-[node name="ClickHoldEnableButton" type="Button" parent="UIManager/HorizontalSplit/ClickHoldEnable"]
+[node name="ClickHoldEnableButton" type="Button" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickHoldEnable"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "N/A"
 
-[node name="ClickHoldInterval" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="ClickHoldInterval" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit"]
 layout_mode = 2
 
-[node name="ClickHoldIntervalText" type="Label" parent="UIManager/HorizontalSplit/ClickHoldInterval"]
+[node name="ClickHoldIntervalText" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickHoldInterval"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Click Holding Interval:"
 
-[node name="ClickHoldIntervalLabel" type="Label" parent="UIManager/HorizontalSplit/ClickHoldInterval"]
+[node name="ClickHoldIntervalLabel" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickHoldInterval"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "N/A"
 
-[node name="ClickHoldIntervalButton" type="Button" parent="UIManager/HorizontalSplit/ClickHoldInterval"]
+[node name="ClickHoldIntervalButton" type="Button" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickHoldInterval"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 disabled = true
 text = "N/A"
 
-[node name="AutoClickEnable" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="AutoClickEnable" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit"]
 layout_mode = 2
 
-[node name="AutoClickEnableText" type="Label" parent="UIManager/HorizontalSplit/AutoClickEnable"]
+[node name="AutoClickEnableText" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/AutoClickEnable"]
 layout_mode = 2
 text = "Enable Auto Clicking:"
 
-[node name="AutoClickEnableButton" type="Button" parent="UIManager/HorizontalSplit/AutoClickEnable"]
+[node name="AutoClickEnableButton" type="Button" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/AutoClickEnable"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "N/A"
 
-[node name="AutoClickInterval" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="AutoClickInterval" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit"]
 layout_mode = 2
 
-[node name="AutoClickIntervalText" type="Label" parent="UIManager/HorizontalSplit/AutoClickInterval"]
+[node name="AutoClickIntervalText" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/AutoClickInterval"]
 layout_mode = 2
 text = "Auto Click Interval:"
 
-[node name="AutoClickIntervalLabel" type="Label" parent="UIManager/HorizontalSplit/AutoClickInterval"]
+[node name="AutoClickIntervalLabel" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/AutoClickInterval"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "N/A"
 
-[node name="AutoClickIntervalButton" type="Button" parent="UIManager/HorizontalSplit/AutoClickInterval"]
+[node name="AutoClickIntervalButton" type="Button" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/AutoClickInterval"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 disabled = true
 text = "N/A"
 
-[node name="SpawnSphere" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="SpawnSphere" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit"]
 layout_mode = 2
 
-[node name="SpawnSphereText" type="Label" parent="UIManager/HorizontalSplit/SpawnSphere"]
+[node name="SpawnSphereText" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/SpawnSphere"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Spawn a Sphere:"
 
-[node name="SpawnSphereLabel" type="Label" parent="UIManager/HorizontalSplit/SpawnSphere"]
+[node name="SpawnSphereLabel" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/SpawnSphere"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "N/A"
 
-[node name="SpawnSphereButton" type="Button" parent="UIManager/HorizontalSplit/SpawnSphere"]
+[node name="SpawnSphereButton" type="Button" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/SpawnSphere"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "N/A"
 
-[node name="IncreaseSphereReward" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="IncreaseSphereReward" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit"]
 layout_mode = 2
 
-[node name="IncreaseSphereRewardText" type="Label" parent="UIManager/HorizontalSplit/IncreaseSphereReward"]
+[node name="IncreaseSphereRewardText" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreaseSphereReward"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Increase Sphere Value:"
 
-[node name="IncreaseSphereRewardLabel" type="Label" parent="UIManager/HorizontalSplit/IncreaseSphereReward"]
+[node name="IncreaseSphereRewardLabel" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreaseSphereReward"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "N/A"
 
-[node name="IncreaseSphereRewardButton" type="Button" parent="UIManager/HorizontalSplit/IncreaseSphereReward"]
+[node name="IncreaseSphereRewardButton" type="Button" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreaseSphereReward"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "N/A"
 
-[node name="SpawnCube" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="SpawnCube" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit"]
 layout_mode = 2
 
-[node name="SpawnCubeText" type="Label" parent="UIManager/HorizontalSplit/SpawnCube"]
+[node name="SpawnCubeText" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/SpawnCube"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Spawn a Cube:"
 
-[node name="SpawnCubeLabel" type="Label" parent="UIManager/HorizontalSplit/SpawnCube"]
+[node name="SpawnCubeLabel" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/SpawnCube"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "N/A"
 
-[node name="SpawnCubeButton" type="Button" parent="UIManager/HorizontalSplit/SpawnCube"]
+[node name="SpawnCubeButton" type="Button" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/SpawnCube"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "N/A"
 
-[node name="IncreaseCubeReward" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="IncreaseCubeReward" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit"]
 layout_mode = 2
 
-[node name="IncreaseCubeRewardText" type="Label" parent="UIManager/HorizontalSplit/IncreaseCubeReward"]
+[node name="IncreaseCubeRewardText" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreaseCubeReward"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Increase Cube Value:"
 
-[node name="IncreaseCubeRewardLabel" type="Label" parent="UIManager/HorizontalSplit/IncreaseCubeReward"]
+[node name="IncreaseCubeRewardLabel" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreaseCubeReward"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "N/A"
 
-[node name="IncreaseCubeRewardButton" type="Button" parent="UIManager/HorizontalSplit/IncreaseCubeReward"]
+[node name="IncreaseCubeRewardButton" type="Button" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreaseCubeReward"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "N/A"
 
-[node name="IncreasePlayArea" type="HBoxContainer" parent="UIManager/HorizontalSplit"]
+[node name="IncreasePlayArea" type="HBoxContainer" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit"]
 layout_mode = 2
 
-[node name="IncreasePlayAreaText" type="Label" parent="UIManager/HorizontalSplit/IncreasePlayArea"]
+[node name="IncreasePlayAreaText" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreasePlayArea"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Increase Play Area:"
 
-[node name="IncreasePlayAreaLabel" type="Label" parent="UIManager/HorizontalSplit/IncreasePlayArea"]
+[node name="IncreasePlayAreaLabel" type="Label" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreasePlayArea"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "N/A"
 
-[node name="IncreasePlayAreaButton" type="Button" parent="UIManager/HorizontalSplit/IncreasePlayArea"]
+[node name="IncreasePlayAreaButton" type="Button" parent="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreasePlayArea"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -327,13 +391,15 @@ script = ExtResource("1_2u4vx")
 unique_name_in_owner = true
 script = ExtResource("3_click_manager")
 
-[connection signal="pressed" from="UIManager/HorizontalSplit/ClickRadius/ClickRadiusButton" to="UIManager" method="_on_click_radius_button_pressed"]
-[connection signal="pressed" from="UIManager/HorizontalSplit/ClickHoldEnable/ClickHoldEnableButton" to="UIManager" method="_on_click_hold_enable_button_pressed"]
-[connection signal="pressed" from="UIManager/HorizontalSplit/ClickHoldInterval/ClickHoldIntervalButton" to="UIManager" method="_on_click_hold_interval_button_pressed"]
-[connection signal="pressed" from="UIManager/HorizontalSplit/AutoClickEnable/AutoClickEnableButton" to="UIManager" method="_on_auto_click_enable_button_pressed"]
-[connection signal="pressed" from="UIManager/HorizontalSplit/AutoClickInterval/AutoClickIntervalButton" to="UIManager" method="_on_auto_click_interval_button_pressed"]
-[connection signal="pressed" from="UIManager/HorizontalSplit/SpawnSphere/SpawnSphereButton" to="UIManager" method="_on_spawn_sphere_button_pressed"]
-[connection signal="pressed" from="UIManager/HorizontalSplit/IncreaseSphereReward/IncreaseSphereRewardButton" to="UIManager" method="_on_increase_sphere_value_button_pressed"]
-[connection signal="pressed" from="UIManager/HorizontalSplit/SpawnCube/SpawnCubeButton" to="UIManager" method="_on_spawn_cube_button_pressed"]
-[connection signal="pressed" from="UIManager/HorizontalSplit/IncreaseCubeReward/IncreaseCubeRewardButton" to="UIManager" method="_on_increase_cube_reward_button_pressed"]
-[connection signal="pressed" from="UIManager/HorizontalSplit/IncreasePlayArea/IncreasePlayAreaButton" to="UIManager" method="_on_increase_play_area_button_pressed"]
+[node name="UserInterface" parent="." instance=ExtResource("6_b26h7")]
+
+[connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickRadius/ClickRadiusButton" to="UIManager" method="_on_click_radius_button_pressed"]
+[connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickHoldEnable/ClickHoldEnableButton" to="UIManager" method="_on_click_hold_enable_button_pressed"]
+[connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickHoldInterval/ClickHoldIntervalButton" to="UIManager" method="_on_click_hold_interval_button_pressed"]
+[connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/AutoClickEnable/AutoClickEnableButton" to="UIManager" method="_on_auto_click_enable_button_pressed"]
+[connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/AutoClickInterval/AutoClickIntervalButton" to="UIManager" method="_on_auto_click_interval_button_pressed"]
+[connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/SpawnSphere/SpawnSphereButton" to="UIManager" method="_on_spawn_sphere_button_pressed"]
+[connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreaseSphereReward/IncreaseSphereRewardButton" to="UIManager" method="_on_increase_sphere_value_button_pressed"]
+[connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/SpawnCube/SpawnCubeButton" to="UIManager" method="_on_spawn_cube_button_pressed"]
+[connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreaseCubeReward/IncreaseCubeRewardButton" to="UIManager" method="_on_increase_cube_reward_button_pressed"]
+[connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/IncreasePlayArea/IncreasePlayAreaButton" to="UIManager" method="_on_increase_play_area_button_pressed"]
