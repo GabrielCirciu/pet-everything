@@ -7,7 +7,7 @@ This script is responsible for managing the game state, including:
 - Managing the game loop (i.e. A Pause Menu, starting, pausing, saving, loading, etc., not implemented yet)
 """
 
-extends Node3D
+extends Node
 
 var entities
 var environment

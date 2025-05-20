@@ -1,8 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://w6tsy7wijstg"]
+[gd_scene load_steps=4 format=3 uid="uid://w6tsy7wijstg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_myowh"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_myowh"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_83nug"]
+material = SubResource("StandardMaterial3D_myowh")
 
 [node name="Cube" type="RigidBody3D" groups=["cube", "spawned_entities"]]
 collision_layer = 2

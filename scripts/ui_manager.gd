@@ -1,87 +1,87 @@
 extends Control
 
 # References to other parts of the game
-var game_manager
-var click_manager
+var game_manager: Node
+var click_manager: Node
 
 # Stats
-var money_label
-var entity_count_label
-var entity_limit_label
-var entity_limit_increase = 2
-var money = 2000
+var money_label: Label
+var entity_count_label: Label
+var entity_limit_label: Label
+var entity_limit_increase: int = 2
+var money: int = 2000
 
 # Upgrades
 
 # Clicking
-var click_radius_label
-var click_radius_button
-var click_radius_increase = 0.5
-var click_radius_cost = 20
-var click_radius_cost_multiplier = 1.2
+var click_radius_label: Label
+var click_radius_button: Button
+var click_radius_increase: float = 0.5
+var click_radius_cost: int = 20
+var click_radius_cost_multiplier: float = 1.2
 
 # Holding
-var click_hold_enable_button
-var click_hold_enable_button_disabled = false
-var click_hold_enable_cost = 50
-var click_hold_interval_label
-var click_hold_interval_button
-var click_hold_interval_button_disabled = false
-var click_hold_interval_increase = 0.95
-var click_hold_interval_cost = 20
-var click_hold_interval_cost_multiplier = 1.2
+var click_hold_enable_button: Button
+var click_hold_enable_button_disabled: bool = false
+var click_hold_enable_cost: int = 50
+var click_hold_interval_label: Label
+var click_hold_interval_button: Button
+var click_hold_interval_button_disabled: bool = false
+var click_hold_interval_increase: float = 0.95
+var click_hold_interval_cost: int = 20
+var click_hold_interval_cost_multiplier: float = 1.2
 
 # Auto Clicking
-var auto_click_enable_button
-var auto_click_interval_label
-var auto_click_interval_button
-var auto_click_enable_button_disabled = false
-var auto_click_enable_cost = 100
-var auto_click_interval_button_disabled = true
-var auto_click_interval_increase = 0.95
-var auto_click_interval_cost = 20
-var auto_click_interval_cost_multiplier = 1.2
+var auto_click_enable_button: Button
+var auto_click_interval_label: Label
+var auto_click_interval_button: Button
+var auto_click_enable_button_disabled: bool = false
+var auto_click_enable_cost: int = 100
+var auto_click_interval_button_disabled: bool = true
+var auto_click_interval_increase: float = 0.95
+var auto_click_interval_cost: int = 20
+var auto_click_interval_cost_multiplier: float = 1.2
 
 # Spheres
-var spawn_sphere_label
-var spawn_sphere_button
-var increase_sphere_reward_label
-var increase_sphere_reward_button
-var sphere_count = 1
-var spawn_sphere_cost = 100
-var spawn_sphere_cost_multiplier = 1.2
-var sphere_reward = 1
-var sphere_reward_increase = 1
-var sphere_reward_increase_cost = 10
-var sphere_reward_increase_cost_multiplier = 1.2
+var spawn_sphere_label: Label
+var spawn_sphere_button: Button
+var increase_sphere_reward_label: Label
+var increase_sphere_reward_button: Button
+var sphere_count: int = 1
+var spawn_sphere_cost: int = 100
+var spawn_sphere_cost_multiplier: float = 1.2
+var sphere_reward: int = 1
+var sphere_reward_increase: int = 1
+var sphere_reward_increase_cost: int = 10
+var sphere_reward_increase_cost_multiplier: float = 1.2
 
 # Cubes
-var spawn_cube_label
-var spawn_cube_button
-var increase_cube_reward_label
-var increase_cube_reward_button
-var cube_count = 1
-var spawn_cube_cost = 100
-var spawn_cube_cost_multiplier = 1.2
-var cube_reward = 2
-var cube_reward_increase = 2
-var cube_reward_increase_cost = 10
-var cube_reward_increase_cost_multiplier = 1.2
+var spawn_cube_label: Label
+var spawn_cube_button: Button
+var increase_cube_reward_label: Label
+var increase_cube_reward_button: Button
+var cube_count: int = 1
+var spawn_cube_cost: int = 100
+var spawn_cube_cost_multiplier: float = 1.2
+var cube_reward: int = 2
+var cube_reward_increase: int = 2
+var cube_reward_increase_cost: int = 10
+var cube_reward_increase_cost_multiplier: float = 1.2
 
 # Increase Play Area
-var increase_play_area_label
-var increase_play_area_button
-var increase_play_area_increase = 2
-var increase_play_area_cost = 100
-var increase_play_area_cost_multiplier = 1.2
+var increase_play_area_label: Label
+var increase_play_area_button: Button
+var increase_play_area_increase: int = 2
+var increase_play_area_cost: int = 100
+var increase_play_area_cost_multiplier: float = 1.2
 
 
 func _ready() -> void:
 	# Dependencies
-	game_manager = get_parent()
+	game_manager = $%GameManager
 	click_manager = $%ClickManager
 
-	# Stats
+	# Main Stats
 	money_label = $%MoneyLabel
 	money_label.text = str(money)
 	entity_count_label = $%EntityCountLabel
@@ -91,7 +91,7 @@ func _ready() -> void:
 
 	# Clicking
 	click_radius_label = $%ClickRadiusLabel
-	click_radius_label.text = str(click_manager.click_radius)
+	click_radius_label.text = "%0.2f" % click_manager.get_click_radius()
 	click_radius_button = $%ClickRadiusButton
 	click_radius_button.text = str(click_radius_cost)
 
@@ -99,7 +99,7 @@ func _ready() -> void:
 	click_hold_enable_button = $%ClickHoldEnableButton
 	click_hold_enable_button.text = str(click_hold_enable_cost)
 	click_hold_interval_label = $%ClickHoldIntervalLabel
-	click_hold_interval_label.text = str(click_manager.click_hold_interval)
+	click_hold_interval_label.text = "%0.2f" % click_manager.get_click_hold_interval()
 	click_hold_interval_button = $%ClickHoldIntervalButton
 	click_hold_interval_button.text = str(click_hold_interval_cost)
 
@@ -107,7 +107,7 @@ func _ready() -> void:
 	auto_click_enable_button = $%AutoClickEnableButton
 	auto_click_enable_button.text = str(auto_click_enable_cost)
 	auto_click_interval_label = $%AutoClickIntervalLabel
-	auto_click_interval_label.text = str(click_manager.get_auto_click_interval())
+	auto_click_interval_label.text = "%0.2f" % click_manager.get_auto_click_interval()
 	auto_click_interval_button = $%AutoClickIntervalButton
 	auto_click_interval_button.text = str(auto_click_interval_cost)
 
@@ -169,7 +169,7 @@ func _on_click_radius_button_pressed() -> void:
 	if money >= click_radius_cost:
 		money -= click_radius_cost
 		click_manager.increase_click_radius(click_radius_increase)
-		click_radius_label.text = str(snapped(click_manager.get_click_radius(), 0.01))
+		click_radius_label.text = "%0.2f" % click_manager.get_click_radius()
 		click_radius_cost = int(click_radius_cost * click_radius_cost_multiplier)
 		click_radius_button.text = str(click_radius_cost)
 		update_labels()
@@ -188,7 +188,7 @@ func _on_click_hold_interval_button_pressed() -> void:
 	if money >= click_hold_interval_cost:
 		money -= click_hold_interval_cost
 		click_manager.increase_click_hold_interval(click_hold_interval_increase)
-		click_hold_interval_label.text = str(snapped(click_manager.get_click_hold_interval(), 0.01))
+		click_hold_interval_label.text = "%0.2f" % click_manager.get_click_hold_interval()
 		click_hold_interval_cost = int(click_hold_interval_cost * click_hold_interval_cost_multiplier)
 		click_hold_interval_button.text = str(click_hold_interval_cost)
 		update_labels()
@@ -219,7 +219,7 @@ func _on_auto_click_interval_button_pressed() -> void:
 	if money >= auto_click_interval_cost:
 		money -= auto_click_interval_cost
 		click_manager.increase_auto_click_interval(auto_click_interval_increase)
-		auto_click_interval_label.text = str(snapped(click_manager.get_auto_click_interval(), 0.01))
+		auto_click_interval_label.text = "%0.2f" % click_manager.get_auto_click_interval()
 		auto_click_interval_cost = int(auto_click_interval_cost * auto_click_interval_cost_multiplier)
 		auto_click_interval_button.text = str(auto_click_interval_cost)
 		update_labels()

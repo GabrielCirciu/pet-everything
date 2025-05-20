@@ -1,10 +1,24 @@
-[gd_scene load_steps=10 format=3 uid="uid://bh7vlix0x2cxc"]
+[gd_scene load_steps=13 format=3 uid="uid://bh7vlix0x2cxc"]
 
 [ext_resource type="Script" uid="uid://ke11qpxkuxhb" path="res://scripts/game_manager.gd" id="1_2u4vx"]
+[ext_resource type="Shader" uid="uid://c81dduwigv7us" path="res://shaders/edge_detection.gdshader" id="1_b26h7"]
 [ext_resource type="Script" uid="uid://cbwem7ro7q515" path="res://scripts/click_manager.gd" id="3_click_manager"]
 [ext_resource type="PackedScene" uid="uid://w6tsy7wijstg" path="res://scenes/clickable_cube.tscn" id="4_7pmop"]
 [ext_resource type="PackedScene" uid="uid://dq0qrrxsaxj6j" path="res://scenes/clickable_sphere.tscn" id="4_453mu"]
 [ext_resource type="Script" uid="uid://banudf2ijx7mn" path="res://scripts/ui_manager.gd" id="4_ui_manager"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_7pmop"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a8wb5"]
+render_priority = 0
+shader = ExtResource("1_b26h7")
+shader_parameter/lightIntensity = 0.1
+shader_parameter/lineAlpha = 1.0
+shader_parameter/useLighting = true
+shader_parameter/lineHighlight = 0.5
+shader_parameter/lineShadow = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ih8ls"]
 size = Vector3(10, 0.001, 10)
@@ -19,8 +33,79 @@ size = Vector3(0.001, 10, 10)
 [sub_resource type="BoxShape3D" id="BoxShape3D_453mu"]
 size = Vector3(10, 10, 0.001)
 
-[node name="GameManager" type="Node3D"]
-script = ExtResource("1_2u4vx")
+[node name="MainScreen" type="Node3D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="Camera" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+transform = Transform3D(0.707107, 0.298836, -0.640857, 0, 0.906308, 0.422618, 0.707107, -0.298836, 0.640857, -23.5915, 18.0606, 23.27)
+keep_aspect = 0
+projection = 1
+current = true
+size = 30.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Camera"]
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_7pmop")
+surface_material_override/0 = SubResource("ShaderMaterial_a8wb5")
+
+[node name="Entities" type="Node3D" parent="SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+
+[node name="Cube" parent="SubViewportContainer/SubViewport/Entities" instance=ExtResource("4_7pmop")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.597447, 0.9178, -0.0304158)
+
+[node name="Sphere" parent="SubViewportContainer/SubViewport/Entities" instance=ExtResource("4_453mu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.669778, 0.798294, 0)
+
+[node name="Environment" type="Node3D" parent="SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+
+[node name="Floor" type="StaticBody3D" parent="SubViewportContainer/SubViewport/Environment"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Environment/Floor"]
+shape = SubResource("BoxShape3D_ih8ls")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Environment/Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_453mu")
+
+[node name="Walls-Invisible" type="StaticBody3D" parent="SubViewportContainer/SubViewport/Environment"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Right" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Environment/Walls-Invisible"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 0)
+shape = SubResource("BoxShape3D_i8u74")
+
+[node name="Left" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Environment/Walls-Invisible"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 0)
+shape = SubResource("BoxShape3D_i8u74")
+
+[node name="Back" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Environment/Walls-Invisible"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -5)
+shape = SubResource("BoxShape3D_453mu")
+
+[node name="Front" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Environment/Walls-Invisible"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
+shape = SubResource("BoxShape3D_453mu")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.671721, 0.47618, -0.567489, 0, 0.766044, 0.642788, 0.740805, -0.431774, 0.514568, 0, 5, 0)
 
 [node name="UIManager" type="Control" parent="."]
 unique_name_in_owner = true
@@ -267,61 +352,13 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "N/A"
 
-[node name="ClickManager" type="Node3D" parent="."]
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_2u4vx")
+
+[node name="ClickManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_click_manager")
-
-[node name="Camera" type="Camera3D" parent="."]
-unique_name_in_owner = true
-transform = Transform3D(0.707107, 0.298836, -0.640856, 0, 0.906308, 0.422618, 0.707107, -0.298836, 0.640856, -23.5915, 18.0606, 23.27)
-keep_aspect = 0
-projection = 1
-size = 30.0
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.671721, 0.47618, -0.567489, 0, 0.766044, 0.642788, 0.740805, -0.431774, 0.514568, 0, 5, 0)
-
-[node name="Entities" type="Node3D" parent="."]
-unique_name_in_owner = true
-
-[node name="Cube" parent="Entities" instance=ExtResource("4_7pmop")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.597447, 0.9178, -0.0304158)
-
-[node name="Sphere" parent="Entities" instance=ExtResource("4_453mu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.669778, 0.798294, 0)
-
-[node name="Environment" type="Node3D" parent="."]
-unique_name_in_owner = true
-
-[node name="Floor" type="StaticBody3D" parent="Environment"]
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Floor"]
-shape = SubResource("BoxShape3D_ih8ls")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-mesh = SubResource("BoxMesh_453mu")
-
-[node name="Walls-Invisible" type="StaticBody3D" parent="Environment"]
-collision_layer = 4
-collision_mask = 0
-
-[node name="Right" type="CollisionShape3D" parent="Environment/Walls-Invisible"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 5, 0)
-shape = SubResource("BoxShape3D_i8u74")
-
-[node name="Left" type="CollisionShape3D" parent="Environment/Walls-Invisible"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5, 0)
-shape = SubResource("BoxShape3D_i8u74")
-
-[node name="Back" type="CollisionShape3D" parent="Environment/Walls-Invisible"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -5)
-shape = SubResource("BoxShape3D_453mu")
-
-[node name="Front" type="CollisionShape3D" parent="Environment/Walls-Invisible"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
-shape = SubResource("BoxShape3D_453mu")
 
 [connection signal="pressed" from="UIManager/HorizontalSplit/ClickRadius/ClickRadiusButton" to="UIManager" method="_on_click_radius_button_pressed"]
 [connection signal="pressed" from="UIManager/HorizontalSplit/ClickHoldEnable/ClickHoldEnableButton" to="UIManager" method="_on_click_hold_enable_button_pressed"]
