@@ -105,29 +105,32 @@ projection = 1
 current = true
 size = 30.0
 
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_2u4vx")
+
+[node name="ClickManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_click_manager")
+
+[node name="UserInterface" parent="." instance=ExtResource("6_b26h7")]
+
 [node name="UIManager" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 script = ExtResource("4_ui_manager")
 
 [node name="VSplitContainer" type="VSplitContainer" parent="UIManager"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.676
-anchor_top = 0.031
-anchor_right = 0.98
-anchor_bottom = 0.95
-offset_left = 0.247925
-offset_top = -0.0880013
-offset_right = 0.0400391
-offset_bottom = -0.600037
-grow_horizontal = 0
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 523.0
 grow_vertical = 2
 dragging_enabled = false
 
@@ -382,16 +385,6 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "N/A"
-
-[node name="GameManager" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("1_2u4vx")
-
-[node name="ClickManager" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("3_click_manager")
-
-[node name="UserInterface" parent="." instance=ExtResource("6_b26h7")]
 
 [connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickRadius/ClickRadiusButton" to="UIManager" method="_on_click_radius_button_pressed"]
 [connection signal="pressed" from="UIManager/VSplitContainer/PanelContainer2/TabContainer/HorizontalSplit/ClickHoldEnable/ClickHoldEnableButton" to="UIManager" method="_on_click_hold_enable_button_pressed"]

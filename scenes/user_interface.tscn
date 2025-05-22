@@ -1,14 +1,74 @@
-[gd_scene load_steps=5 format=3 uid="uid://dilhedk42fiqg"]
+[gd_scene load_steps=24 format=3 uid="uid://dilhedk42fiqg"]
 
 [ext_resource type="Script" uid="uid://cr71jlx5u034k" path="res://scripts/panel_manager.gd" id="1_l2bgj"]
 [ext_resource type="ButtonGroup" uid="uid://b8pjtsmv4shtx" path="res://resources/settings_button_group.tres" id="2_y1h3b"]
+[ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/SmoothScrollContainer.gd" id="3_jbsfc"]
+[ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="4_cufge"]
 
 [sub_resource type="Gradient" id="Gradient_l2bgj"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_y1h3b"]
 gradient = SubResource("Gradient_l2bgj")
-width = 32
-height = 32
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cufge"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l2bgj"]
+
+[sub_resource type="Gradient" id="Gradient_y1h3b"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jbsfc"]
+gradient = SubResource("Gradient_y1h3b")
+width = 128
+height = 128
+
+[sub_resource type="Gradient" id="Gradient_cufge"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lmgon"]
+gradient = SubResource("Gradient_cufge")
+width = 128
+height = 128
+
+[sub_resource type="Gradient" id="Gradient_xsrv6"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sdud1"]
+gradient = SubResource("Gradient_xsrv6")
+width = 128
+height = 128
+
+[sub_resource type="Gradient" id="Gradient_aisij"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_prbuy"]
+gradient = SubResource("Gradient_aisij")
+width = 128
+height = 128
+
+[sub_resource type="Resource" id="Resource_lmgon"]
+script = ExtResource("4_cufge")
+friction = 4.0
+minimum_velocity = 0.4
+rebound_strength = 7.0
+
+[sub_resource type="Resource" id="Resource_xsrv6"]
+script = ExtResource("4_cufge")
+friction = 4.0
+minimum_velocity = 0.4
+rebound_strength = 7.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jbsfc"]
+
+[sub_resource type="Gradient" id="Gradient_5kqoc"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rwqes"]
+gradient = SubResource("Gradient_5kqoc")
+width = 128
+height = 128
+
+[sub_resource type="Gradient" id="Gradient_vdd1l"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kqxtq"]
+gradient = SubResource("Gradient_vdd1l")
+width = 128
+height = 128
 
 [node name="UserInterface" type="Control"]
 layout_mode = 3
@@ -22,55 +82,110 @@ size_flags_vertical = 0
 
 [node name="PanelManager" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
+anchors_preset = -1
+anchor_left = 0.744
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -302.0
+offset_left = -0.959961
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 40
 script = ExtResource("1_l2bgj")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelManager"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Money" type="MarginContainer" parent="PanelManager/VBoxContainer"]
+[node name="Stats" type="MarginContainer" parent="PanelManager/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 20
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.09
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 60
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Money"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Stats"]
+layout_mode = 2
+
+[node name="Money" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer"]
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelManager/VBoxContainer/Money/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/Money"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Money/HBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/Money/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 20
 
-[node name="MoneyLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Money/HBoxContainer/PanelContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/Money/PanelContainer/MarginContainer"]
 layout_mode = 2
+
+[node name="MoneyLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/Money/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 70
 text = "N/A"
+fit_content = true
 scroll_active = false
 vertical_alignment = 1
 
-[node name="MoneyIcon" type="TextureRect" parent="PanelManager/VBoxContainer/Money/HBoxContainer/PanelContainer/MarginContainer"]
+[node name="MoneyIcon" type="TextureRect" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/Money/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
 texture = SubResource("GradientTexture2D_y1h3b")
-stretch_mode = 2
+stretch_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer"]
+layout_mode = 2
+
+[node name="EmptySpaceRight" type="PanelContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_cufge")
+
+[node name="Entities" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer/Entities"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer/Entities/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer/Entities/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="EntitiesLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer/Entities/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.35
+theme_override_font_sizes/normal_font_size = 70
+text = "N/A"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+
+[node name="EntitiesIcon" type="TextureRect" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer/Entities/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+texture = SubResource("GradientTexture2D_y1h3b")
+stretch_mode = 3
 
 [node name="Menus" type="MarginContainer" parent="PanelManager/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/margin_left = 40
 theme_override_constants/margin_bottom = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus"]
@@ -83,35 +198,61 @@ size_flags_horizontal = 3
 [node name="TopMenus" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.04
 alignment = 1
 
-[node name="CursorsButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
-unique_name_in_owner = true
+[node name="EmptySpaceLeft" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
 layout_mode = 2
-toggle_mode = true
-button_group = ExtResource("2_y1h3b")
-text = "Cu"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_l2bgj")
 
-[node name="AnimalsButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
+[node name="CursorsPanelButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
 toggle_mode = true
 button_group = ExtResource("2_y1h3b")
-text = "An"
+icon = SubResource("GradientTexture2D_jbsfc")
+icon_alignment = 1
 
-[node name="FurnituresButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
+[node name="AnimalsPanelButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
 toggle_mode = true
 button_group = ExtResource("2_y1h3b")
-text = "Fu"
+icon = SubResource("GradientTexture2D_lmgon")
+icon_alignment = 1
 
-[node name="OptionsButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
+[node name="FurnituresPanelButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
 toggle_mode = true
 button_group = ExtResource("2_y1h3b")
-text = "Op"
+icon = SubResource("GradientTexture2D_sdud1")
+icon_alignment = 1
+
+[node name="OptionsPanelButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+toggle_mode = true
+button_group = ExtResource("2_y1h3b")
+icon = SubResource("GradientTexture2D_prbuy")
+icon_alignment = 1
+
+[node name="EmptySpaceRight" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/TopMenus"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_l2bgj")
 
 [node name="CursorsPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
 unique_name_in_owner = true
@@ -125,10 +266,310 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer"]
 layout_mode = 2
-text = "Cursors and Other"
+
+[node name="CursorTitleText" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+theme_override_font_sizes/normal_font_size = 40
+text = "Upgrades"
 horizontal_alignment = 1
+
+[node name="SmoothScrollContainer" type="ScrollContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("3_jbsfc")
+wheel_scroll_damper = SubResource("Resource_lmgon")
+dragging_scroll_damper = SubResource("Resource_xsrv6")
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="EmptySpaceTop" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
+
+[node name="ClickRadius" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickRadius"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="ClickRadiusLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickRadius/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
+text = "Click Radius"
+
+[node name="ClickRadiusValue" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickRadius/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 25
+text = "N/A"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickRadius"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 20
+
+[node name="ClickRadiusButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickRadius/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="ClickHoldingEnable" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingEnable"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="ClickHoldingEnableLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingEnable/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
+text = "Enable Click Holding"
+
+[node name="ClickHoldingEnableValue" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingEnable/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 25
+text = "N/A"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingEnable"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 20
+
+[node name="ClickHoldingEnableButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingEnable/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="ClickHoldingInterval" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingInterval"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="ClickHoldingIntervalLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingInterval/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
+text = "Click Holding Interval"
+
+[node name="ClickHoldingIntervalValue" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingInterval/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 25
+text = "N/A"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingInterval"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 20
+
+[node name="ClickHoldingEnableButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingInterval/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="ClickAutoEnable" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoEnable"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="ClickAutoEnableLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoEnable/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
+text = "Enable Auto Clicking"
+
+[node name="ClickAutoEnableValue" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoEnable/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 25
+text = "N/A"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoEnable"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 20
+
+[node name="ClickAutoEnableButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoEnable/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="ClickAutoRadius" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoRadius"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="ClickAutoRadiusLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoRadius/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
+text = "Auto Clicking Radius"
+
+[node name="ClickAutoRadiusValue" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoRadius/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 25
+text = "N/A"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoRadius"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 20
+
+[node name="ClickAutoRadiusButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoRadius/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="ClickAutoInterval" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoInterval"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="ClickAutoIntervalLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoInterval/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
+text = "Auto Clicking Interval"
+
+[node name="ClickAutoIntervalValue" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoInterval/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 25
+text = "N/A"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoInterval"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 20
+
+[node name="ClickAutoIntervalButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoInterval/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="PlayAreaIncrease" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/PlayAreaIncrease"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="PlayAreaIncreaseLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/PlayAreaIncrease/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
+text = "Play Area Size"
+
+[node name="PlayAreaIncreaseValue" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/PlayAreaIncrease/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 25
+text = "N/A"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/PlayAreaIncrease"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 20
+
+[node name="PlayAreaIncreaseButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/PlayAreaIncrease/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="EmptySpaceBottom" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
 
 [node name="AnimalsPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
 unique_name_in_owner = true
@@ -143,10 +584,122 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer"]
 layout_mode = 2
+
+[node name="CursorTitleText" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+theme_override_font_sizes/normal_font_size = 40
 text = "Animals"
 horizontal_alignment = 1
+
+[node name="SmoothScrollContainer" type="ScrollContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("3_jbsfc")
+wheel_scroll_damper = SubResource("Resource_lmgon")
+dragging_scroll_damper = SubResource("Resource_xsrv6")
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="EmptySpaceTop" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
+
+[node name="SphereSpawn" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/SphereSpawn"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="SphereSpawnLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/SphereSpawn/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
+text = "Spawn Sphere"
+
+[node name="SphereSpawnValue" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/SphereSpawn/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 25
+text = "N/A"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/SphereSpawn"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 20
+
+[node name="SphereSpawnButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/SphereSpawn/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="CubeSpawn" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/CubeSpawn"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="CubeSpawnLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/CubeSpawn/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
+text = "Spawn Cube"
+
+[node name="CubeSpawnValue" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/CubeSpawn/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 25
+text = "N/A"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/CubeSpawn"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 20
+
+[node name="CubeSpawnButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/CubeSpawn/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="EmptySpaceBottom" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/AnimalsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
 
 [node name="FurnituresPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
 unique_name_in_owner = true
@@ -161,10 +714,44 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/FurnituresPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/FurnituresPanel/MarginContainer"]
 layout_mode = 2
+
+[node name="CursorTitleText" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/FurnituresPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+theme_override_font_sizes/normal_font_size = 40
 text = "Furnitures"
 horizontal_alignment = 1
+
+[node name="SmoothScrollContainer" type="ScrollContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/FurnituresPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("3_jbsfc")
+wheel_scroll_damper = SubResource("Resource_lmgon")
+dragging_scroll_damper = SubResource("Resource_xsrv6")
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/FurnituresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="EmptySpaceTop" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/FurnituresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
+
+[node name="EmptySpaceBottom" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/FurnituresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
 
 [node name="OptionsPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
 unique_name_in_owner = true
@@ -179,10 +766,44 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/OptionsPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/OptionsPanel/MarginContainer"]
 layout_mode = 2
+
+[node name="CursorTitleText" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+theme_override_font_sizes/normal_font_size = 40
 text = "Options"
 horizontal_alignment = 1
+
+[node name="SmoothScrollContainer" type="ScrollContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("3_jbsfc")
+wheel_scroll_damper = SubResource("Resource_lmgon")
+dragging_scroll_damper = SubResource("Resource_xsrv6")
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/OptionsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="EmptySpaceTop" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/OptionsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
+
+[node name="EmptySpaceBottom" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/OptionsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
 
 [node name="SpheresPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
 unique_name_in_owner = true
@@ -197,10 +818,83 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer"]
 layout_mode = 2
+
+[node name="CursorTitleText" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+theme_override_font_sizes/normal_font_size = 40
 text = "Spheres"
 horizontal_alignment = 1
+
+[node name="SmoothScrollContainer" type="ScrollContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("3_jbsfc")
+wheel_scroll_damper = SubResource("Resource_lmgon")
+dragging_scroll_damper = SubResource("Resource_xsrv6")
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="EmptySpaceTop" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
+
+[node name="SphereReward" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/SphereReward"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="SphereRewardLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/SphereReward/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
+text = "Sphere Reward"
+
+[node name="SphereRewardValue" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/SphereReward/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 25
+text = "N/A"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/SphereReward"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 20
+
+[node name="SphereRewardButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/SphereReward/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="EmptySpaceBottom" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/SpheresPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
 
 [node name="CubesPanel" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
 unique_name_in_owner = true
@@ -215,25 +909,116 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer"]
 layout_mode = 2
+
+[node name="CursorTitleText" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+theme_override_font_sizes/normal_font_size = 40
 text = "Cubes"
 horizontal_alignment = 1
 
+[node name="SmoothScrollContainer" type="ScrollContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+script = ExtResource("3_jbsfc")
+wheel_scroll_damper = SubResource("Resource_lmgon")
+dragging_scroll_damper = SubResource("Resource_xsrv6")
+metadata/_custom_type_script = "uid://bgqglerkcylxx"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer/VBoxContainer/SmoothScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="EmptySpaceTop" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
+
+[node name="CubeReward" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Text" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/CubeReward"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+
+[node name="CubeRewardLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/CubeReward/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 40
+text = "Cube Reward"
+
+[node name="CubeRewardValue" type="RichTextLabel" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/CubeReward/Text"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 25
+text = "N/A"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/CubeReward"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 20
+
+[node name="CubeRewardButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/CubeReward/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_font_sizes/font_size = 40
+text = "N/A"
+
+[node name="EmptySpaceBottom" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CubesPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jbsfc")
+
 [node name="SideMenus" type="VBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.11
 alignment = 1
 
-[node name="SpheresButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/SideMenus"]
-unique_name_in_owner = true
+[node name="EmptySpaceTop" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/SideMenus"]
 layout_mode = 2
-toggle_mode = true
-button_group = ExtResource("2_y1h3b")
-text = "Sp"
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_l2bgj")
 
-[node name="CubesButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/SideMenus"]
+[node name="SpheresPanelButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/SideMenus"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.09
 toggle_mode = true
 button_group = ExtResource("2_y1h3b")
-text = "Cu"
+icon = SubResource("GradientTexture2D_rwqes")
+icon_alignment = 1
+
+[node name="CubesPanelButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/SideMenus"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.09
+toggle_mode = true
+button_group = ExtResource("2_y1h3b")
+icon = SubResource("GradientTexture2D_kqxtq")
+icon_alignment = 1
+
+[node name="EmptySpaceBottom" type="PanelContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/SideMenus"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_l2bgj")

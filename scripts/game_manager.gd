@@ -19,12 +19,12 @@ var entity_types = {
 	"cube": preload("res://scenes/clickable_cube.tscn")
 }
 var play_area_size = 1
-var entity_limit = 10
+var entity_limit = 100
 var entity_count = 2
 
 var save_data = {
 	"play_area_size": 1,
-	"entity_limit": 10,
+	"entity_limit": 100,
 	"entity_count": 2,
 	"money": 0,
 	"entities": []
@@ -42,16 +42,16 @@ func _ready():
 
 
 func _input(event):
-	# Handle zoom input
+	# Camera Zoom
 	if event.is_action_pressed("camera_zoom_in") and camera.size > 10:
-		camera.size -= 1.0
+		camera.size *= 0.9
 	elif event.is_action_pressed("camera_zoom_out") and camera.size < 100:
-		camera.size += 1.0
-	# Handle camera panning with rebindable button
+		camera.size *= 1.1
+	# Camera Pan
 	elif event is InputEventMouseMotion and Input.is_action_pressed("camera_pan"):
 		var right = camera.global_transform.basis.x
 		var up = camera.global_transform.basis.y
-		var move_speed = camera.size / 1000
+		var move_speed = camera.size * 0.0003
 		camera.position -= right * event.relative.x * move_speed
 		camera.position += up * event.relative.y * move_speed
 
@@ -65,7 +65,7 @@ func _process(delta):
 
 func reset_game():
 	play_area_size = 1
-	entity_limit = 10
+	entity_limit = 100
 	entity_count = 2
 	ui_manager.money = 0
 	# clear entities

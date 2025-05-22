@@ -2,12 +2,12 @@ extends MarginContainer
 
 var panels: Array[PanelContainer] = []
 
-@onready var cursors_button: Button = %CursorsButton
-@onready var animals_button: Button = %AnimalsButton
-@onready var furnitures_button: Button = %FurnituresButton
-@onready var options_button: Button = %OptionsButton
-@onready var spheres_button: Button = %SpheresButton
-@onready var cubes_button: Button = %CubesButton
+@onready var cursors_button: Button = %CursorsPanelButton
+@onready var animals_button: Button = %AnimalsPanelButton
+@onready var furnitures_button: Button = %FurnituresPanelButton
+@onready var options_button: Button = %OptionsPanelButton
+@onready var spheres_button: Button = %SpheresPanelButton
+@onready var cubes_button: Button = %CubesPanelButton
 
 func _ready() -> void:
 	panels = [
