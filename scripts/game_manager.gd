@@ -51,7 +51,7 @@ func _input(event):
 	elif event is InputEventMouseMotion and Input.is_action_pressed("camera_pan"):
 		var right = camera.global_transform.basis.x
 		var up = camera.global_transform.basis.y
-		var move_speed = camera.size * 0.0003
+		var move_speed = camera.size * 0.0005
 		camera.position -= right * event.relative.x * move_speed
 		camera.position += up * event.relative.y * move_speed
 
@@ -87,7 +87,6 @@ func reset_game():
 	save_game()
 
 
-
 func save_game():
 	# Update save data
 	save_data.play_area_size = play_area_size
@@ -118,6 +117,7 @@ func save_game():
 			localStorage.setItem('pet_everything_save', '%s');
 		""" % json_string.uri_encode())
 	print("Game saved")
+
 
 func load_game():
 	if OS.has_feature("JavaScript"):

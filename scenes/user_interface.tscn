@@ -1,6 +1,8 @@
-[gd_scene load_steps=24 format=3 uid="uid://dilhedk42fiqg"]
+[gd_scene load_steps=27 format=3 uid="uid://dilhedk42fiqg"]
 
+[ext_resource type="Texture2D" uid="uid://drw5s1jm1oegl" path="res://images/Untitled.png" id="1_cufge"]
 [ext_resource type="Script" uid="uid://cr71jlx5u034k" path="res://scripts/panel_manager.gd" id="1_l2bgj"]
+[ext_resource type="Texture2D" uid="uid://n8d7x23kfwa8" path="res://images/Untitled2.png" id="1_lmgon"]
 [ext_resource type="ButtonGroup" uid="uid://b8pjtsmv4shtx" path="res://resources/settings_button_group.tres" id="2_y1h3b"]
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/SmoothScrollContainer.gd" id="3_jbsfc"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="4_cufge"]
@@ -10,7 +12,10 @@
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_y1h3b"]
 gradient = SubResource("Gradient_l2bgj")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cufge"]
+[sub_resource type="Gradient" id="Gradient_sdud1"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aisij"]
+gradient = SubResource("Gradient_sdud1")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l2bgj"]
 
@@ -18,29 +23,21 @@ gradient = SubResource("Gradient_l2bgj")
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_jbsfc"]
 gradient = SubResource("Gradient_y1h3b")
-width = 128
-height = 128
 
 [sub_resource type="Gradient" id="Gradient_cufge"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_lmgon"]
 gradient = SubResource("Gradient_cufge")
-width = 128
-height = 128
 
 [sub_resource type="Gradient" id="Gradient_xsrv6"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_sdud1"]
 gradient = SubResource("Gradient_xsrv6")
-width = 128
-height = 128
 
 [sub_resource type="Gradient" id="Gradient_aisij"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_prbuy"]
 gradient = SubResource("Gradient_aisij")
-width = 128
-height = 128
 
 [sub_resource type="Resource" id="Resource_lmgon"]
 script = ExtResource("4_cufge")
@@ -60,15 +57,11 @@ rebound_strength = 7.0
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_rwqes"]
 gradient = SubResource("Gradient_5kqoc")
-width = 128
-height = 128
 
 [sub_resource type="Gradient" id="Gradient_vdd1l"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_kqxtq"]
 gradient = SubResource("Gradient_vdd1l")
-width = 128
-height = 128
 
 [node name="UserInterface" type="Control"]
 layout_mode = 3
@@ -79,19 +72,43 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+metadata/_edit_lock_ = true
+
+[node name="Reference" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_lmgon")
+expand_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="Reference2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_cufge")
+expand_mode = 1
+metadata/_edit_lock_ = true
 
 [node name="PanelManager" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.744
+anchor_left = 0.667
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -0.959961
+offset_left = -0.640137
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 40
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 script = ExtResource("1_l2bgj")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelManager"]
@@ -100,93 +117,58 @@ theme_override_constants/separation = 0
 
 [node name="Stats" type="MarginContainer" parent="PanelManager/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.09
-theme_override_constants/margin_right = 100
+size_flags_stretch_ratio = 0.05
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 60
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelManager/VBoxContainer/Stats"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats"]
 layout_mode = 2
 
-[node name="Money" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer"]
-custom_minimum_size = Vector2(0, 25)
+[node name="Money" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/Money"]
+[node name="PanelContainer" type="PanelContainer" parent="PanelManager/VBoxContainer/Stats/HBoxContainer/Money"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/Money/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Stats/HBoxContainer/Money/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/Money/PanelContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/HBoxContainer/Money/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="MoneyLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/Money/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="MoneyLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Stats/HBoxContainer/Money/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/normal_font_size = 40
 text = "N/A"
 fit_content = true
 scroll_active = false
 vertical_alignment = 1
 
-[node name="MoneyIcon" type="TextureRect" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/Money/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="MoneyIcon" type="TextureRect" parent="PanelManager/VBoxContainer/Stats/HBoxContainer/Money/PanelContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.2
 texture = SubResource("GradientTexture2D_y1h3b")
 stretch_mode = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer"]
-layout_mode = 2
-
-[node name="EmptySpaceRight" type="PanelContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxEmpty_cufge")
-
-[node name="Entities" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(0, 25)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="PanelContainer" type="PanelContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer/Entities"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer/Entities/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelManager/VBoxContainer/Stats/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_right = 20
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer/Entities/PanelContainer/MarginContainer"]
+[node name="TextureButton" type="TextureButton" parent="PanelManager/VBoxContainer/Stats/HBoxContainer/MarginContainer"]
 layout_mode = 2
-
-[node name="EntitiesLabel" type="RichTextLabel" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer/Entities/PanelContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.35
-theme_override_font_sizes/normal_font_size = 70
-text = "N/A"
-fit_content = true
-scroll_active = false
-vertical_alignment = 1
-
-[node name="EntitiesIcon" type="TextureRect" parent="PanelManager/VBoxContainer/Stats/VBoxContainer/HBoxContainer/Entities/PanelContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.2
-texture = SubResource("GradientTexture2D_y1h3b")
-stretch_mode = 3
+texture_normal = SubResource("GradientTexture2D_aisij")
 
 [node name="Menus" type="MarginContainer" parent="PanelManager/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_bottom = 20
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus"]
 layout_mode = 2
@@ -196,7 +178,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="TopMenus" type="HBoxContainer" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels"]
-custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.04
@@ -273,7 +254,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.05
-theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/normal_font_size = 20
 text = "Upgrades"
 horizontal_alignment = 1
 
@@ -334,6 +315,7 @@ theme_override_constants/margin_right = 20
 [node name="ClickRadiusButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickRadius/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 theme_override_font_sizes/font_size = 40
 text = "N/A"
 
@@ -372,6 +354,7 @@ theme_override_constants/margin_right = 20
 [node name="ClickHoldingEnableButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingEnable/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 theme_override_font_sizes/font_size = 40
 text = "N/A"
 
@@ -410,6 +393,7 @@ theme_override_constants/margin_right = 20
 [node name="ClickHoldingEnableButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickHoldingInterval/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 theme_override_font_sizes/font_size = 40
 text = "N/A"
 
@@ -448,6 +432,7 @@ theme_override_constants/margin_right = 20
 [node name="ClickAutoEnableButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoEnable/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 theme_override_font_sizes/font_size = 40
 text = "N/A"
 
@@ -486,6 +471,7 @@ theme_override_constants/margin_right = 20
 [node name="ClickAutoRadiusButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoRadius/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 theme_override_font_sizes/font_size = 40
 text = "N/A"
 
@@ -524,6 +510,7 @@ theme_override_constants/margin_right = 20
 [node name="ClickAutoIntervalButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/ClickAutoInterval/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 theme_override_font_sizes/font_size = 40
 text = "N/A"
 
@@ -562,6 +549,7 @@ theme_override_constants/margin_right = 20
 [node name="PlayAreaIncreaseButton" type="Button" parent="PanelManager/VBoxContainer/Menus/HBoxContainer/TopMenusAndPanels/CursorsPanel/MarginContainer/VBoxContainer/SmoothScrollContainer/VBoxContainer/PlayAreaIncrease/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 theme_override_font_sizes/font_size = 40
 text = "N/A"
 
